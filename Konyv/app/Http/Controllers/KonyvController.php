@@ -14,7 +14,8 @@ class KonyvController extends Controller
      */
     public function index()
     {
-        //
+        $konyv = Konyv::all();
+        return response()->json($konyv);
     }
 
     /**
