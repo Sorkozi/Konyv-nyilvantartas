@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Konyv;
+use App\Models\konyvnyilv;
 use Illuminate\Http\Request;
+
 
 class KonyvController extends Controller
 {
@@ -14,7 +15,7 @@ class KonyvController extends Controller
      */
     public function index()
     {
-        $konyv = Konyv::all();
+       $konyv = konyvnyilv::all();
         return response()->json($konyv);
     }
 
@@ -45,9 +46,10 @@ class KonyvController extends Controller
      * @param  \App\Models\Konyv  $konyv
      * @return \Illuminate\Http\Response
      */
-    public function show(Konyv $konyv)
+    public function show(konyvnyilv $konyv, int $id)
     {
-        //
+        $konyv = konyvnyilv::find($id);
+        $konyv = konyvnyilv::where("felhasznalo_id", $id)->get();
     }
 
     /**
@@ -56,7 +58,7 @@ class KonyvController extends Controller
      * @param  \App\Models\Konyv  $konyv
      * @return \Illuminate\Http\Response
      */
-    public function edit(Konyv $konyv)
+    public function edit(konyvnyilv $konyv)
     {
         //
     }
@@ -68,7 +70,7 @@ class KonyvController extends Controller
      * @param  \App\Models\Konyv  $konyv
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Konyv $konyv)
+    public function update(Request $request, konyvnyilv $konyv)
     {
         //
     }
@@ -79,7 +81,7 @@ class KonyvController extends Controller
      * @param  \App\Models\Konyv  $konyv
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Konyv $konyv)
+    public function destroy(konyvnyilv $konyv)
     {
         //
     }
