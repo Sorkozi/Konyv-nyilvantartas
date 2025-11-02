@@ -15,10 +15,24 @@ class KonyvController extends Controller
      */
     public function index()
     {
-       $konyv = konyvnyilv::all();
-        return response()->json($konyv);
+      return konyvnyilv::with('szerzo','kategoria')->get();
     }
 
+
+    public function byKategoria($id)
+    { 
+        return konyvnyilv::where('kategoriaid', $id)->with('szerzo','kategoria')->get(); 
+    }
+
+    public function bySzerzo($id)
+    { 
+        return konyvnyilv::where('szerzoid', $id)->with('szerzo','kategoria')->get(); 
+    }
+
+    public function elerheto()
+    {
+         return konyvnyilv::where('elerheto', 1)->with('szerzo','kategoria')->get(); 
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +51,16 @@ class KonyvController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+        'cim' => 'required|string|max:255',
+        'szerzoid' => 'required|integer|exists:szerzok,szerzoid',
+        'kategoriaid' => 'required|integer|exists:kategoriak,kategoriaid',
+        'kiado' => 'required|string|max:255',
+        'kiadasev' => 'required|integer',
+        'isbn' => 'required|string|max:20',
+        'elerheto' => 'required|boolean'
+         ]);
+        return konyvnyilv::create($validated);
     }
 
     /**
